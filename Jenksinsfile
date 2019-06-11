@@ -14,3 +14,14 @@ node{
     sh "${mvn}/bin/mvn clean deploy"
     }
 stage('Deployment'){
+    sshagent(['df4243a8-6f17-4862-b593-ce0f2b401b0a']) {
+    // some block
+
+   sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/kishore-mohsin/target/maven-web-application.war ec2-user@13.126.106.35:/opt/apache-tomcat-9.0.20/webapps/'
+
+    }   
+    }
+}
+
+
+
