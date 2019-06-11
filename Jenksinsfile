@@ -1,0 +1,16 @@
+node{
+    def mvn=tool name: 'mvn', type: 'maven'
+    stage ('git checkout'){
+        git credentialsId: '3170cd41-8c6e-41ab-8000-97d53512bd0e', url: 'https://github.com/mohisinwahab/maven-web-application.git'
+    }
+    stage ('build'){
+         sh "${mvn}/bin/mvn clean package"
+    }
+    stage ('report-sonar')
+    {
+      sh "${mvn}/bin/mvn clean package sonar:sonar"  
+    }
+    stage ('artificats upload -nexus'){
+    sh "${mvn}/bin/mvn clean deploy"
+    }
+stage('Deployment'){
